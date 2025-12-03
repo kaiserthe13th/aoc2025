@@ -1,18 +1,22 @@
 import os
 
+# load input file
 with open(os.path.join(__file__, "../../input")) as f:
     inp = [line.strip() for line in f.readlines()]
 
 res = 0
 
 def sol_line(line: str, dig_count: int, start: int, prefix: str):
-    if dig_count <= 0:
+    if dig_count <= 0: # if we got no digits left needed, return the prefix
         return int(prefix)
+    # if there is a single digit, use the whole line after start, otherwise just use from start till the last digit count - 1 elements
     nline = line[start:] if dig_count == 1 else line[start:-(dig_count - 1)]
+    # find maximum index
     max_idx = 0
     for i, ch in enumerate(nline):
         if nline[max_idx] < ch:
             max_idx = i
+    # recurse to find next digit, start one past our current max, and update prefix
     return sol_line(line, dig_count - 1, start = start + max_idx + 1, prefix = prefix + nline[max_idx])
 
 for line in inp:
