@@ -9,9 +9,11 @@ arr = np.array(inp)
 tarr = arr.transpose()
 
 res = 0
+# because we transposed, we can just go line by line
 for row in tarr:
     ls = []
     for n in row:
+        # if we have an operator, do it, otherwise keep adding to the list
         if n == '*':
             res += np.array(ls).prod()
         elif n == '+':
